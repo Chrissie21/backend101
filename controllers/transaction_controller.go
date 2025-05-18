@@ -89,3 +89,33 @@ func DeleteTransaction(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"message": "Transaction deleted"})
 }
+
+func GetBalance(c *gin.Context) {
+	userID := c.MustGet("userID").(uint)
+
+	var incomeTotal float64
+	var expenseTotal float64
+
+	// Sum incomes
+	database.DB.Model(&models.Transaction{}).
+		Where("user_id = ? AND type = ?", userID, "income").
+		Select("COALESCE(SUM(amount), 0)").Scan(&incomeTotal)
+
+	// Sum expenses
+	database.DB.Model(&models.Transaction{}).
+		Where("user_id = ? AND type = ?", userID, "expense").
+		Select("COALESCE(SUM(amount), 0)").Scan(&expenseTotal)
+
+	balance := incomeTotal - expenseTotal
+	status := "positive"
+	if balance < 0 {
+		status = "negative"
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"income_total":   incomeTotal,
+		"expense_total":  expenseTotal,
+		"balance":        balance,
+		"financial_zone": status,
+	})
+}
