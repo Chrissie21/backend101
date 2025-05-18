@@ -15,5 +15,6 @@ func TransactionRoutes(router *gin.Engine) {
 		tx.GET("/", controllers.GetTransactions)
 		tx.PUT("/:id", controllers.UpdateTransaction)
 		tx.DELETE(("/:id"), controllers.DeleteTransaction)
+		tx.GET("/balance", controllers.GetBalance)
 	}
 }
