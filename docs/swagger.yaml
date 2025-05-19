@@ -209,12 +209,6 @@ paths:
         name: transaction
         required: true
         schema:
-          $ref: '#/definitions/models.Transaction'
-      - description: Transaction to create
-        in: body
-        name: transaction
-        required: true
-        schema:
           $ref: '#/definitions/dto.CreateTransactionInput'
       produces:
       - application/json
@@ -285,12 +279,6 @@ paths:
         name: id
         required: true
         type: string
-      - description: Updated transaction data
-        in: body
-        name: transaction
-        required: true
-        schema:
-          $ref: '#/definitions/models.Transaction'
       - description: Updated transaction data
         in: body
         name: transaction

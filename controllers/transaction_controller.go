@@ -16,13 +16,12 @@ import (
 // @Tags Transactions
 // @Accept  json
 // @Produce  json
-// @Param transaction body models.Transaction true "Transaction to create"
+// @Param transaction body dto.CreateTransactionInput true "Transaction to create"
 // @Success 200 {object} models.Transaction
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
 // @Security BearerAuth
 // @Router /transactions [post]
-// @Param transaction body dto.CreateTransactionInput true "Transaction to create"
 func CreateTransaction(c *gin.Context) {
 	var tx models.Transaction
 
@@ -76,14 +75,13 @@ func GetTransactions(c *gin.Context) {
 // @Accept  json
 // @Produce  json
 // @Param id path string true "Transaction ID"
-// @Param transaction body models.Transaction true "Updated transaction data"
+// @Param transaction body dto.UpdateTransactionInput true "Updated transaction data"
 // @Success 200 {object} models.Transaction
 // @Failure 400 {object} map[string]string
 // @Failure 404 {object} map[string]string
 // @Failure 500 {object} map[string]string
 // @Security BearerAuth
 // @Router /transactions/{id} [put]
-// @Param transaction body dto.UpdateTransactionInput true "Updated transaction data"
 func UpdateTransaction(c *gin.Context) {
 	userID := c.MustGet("userID").(uint)
 	id := c.Param("id")

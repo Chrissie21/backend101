@@ -194,15 +194,6 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.Transaction"
-                        }
-                    },
-                    {
-                        "description": "Transaction to create",
-                        "name": "transaction",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
                             "$ref": "#/definitions/dto.CreateTransactionInput"
                         }
                     }
@@ -295,15 +286,6 @@ const docTemplate = `{
                         "name": "id",
                         "in": "path",
                         "required": true
-                    },
-                    {
-                        "description": "Updated transaction data",
-                        "name": "transaction",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/models.Transaction"
-                        }
                     },
                     {
                         "description": "Updated transaction data",
