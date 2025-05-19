@@ -63,7 +63,13 @@ func UpdateTransaction(c *gin.Context) {
 		return
 	}
 
-	// Only allow updates to this field
+	// Validate
+	if validationErrors := utils.ValidateStruct(&input); validationErrors != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"validation_errors": validationErrors})
+		return
+	}
+
+	// Only allow updates to this field and only update fields after validation
 	tx.Amount = input.Amount
 	tx.Category = input.Category
 	tx.Description = input.Description
