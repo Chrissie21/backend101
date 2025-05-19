@@ -20,7 +20,6 @@ import (
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
 // @Router /auth/register [post]
-
 func Register(c *gin.Context) {
 	var req models.RegisterRequest
 
@@ -64,7 +63,6 @@ func Register(c *gin.Context) {
 // @Failure 401 {object} map[string]string
 // @Failure 500 {object} map[string]string
 // @Router /auth/login [post]
-
 func Login(c *gin.Context) {
 	var req models.LoginRequest
 
