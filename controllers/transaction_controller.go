@@ -10,6 +10,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// CreateTransaction godoc
+// @Summary Create a transaction
+// @Description Add a new income or expense transaction
+// @Tags Transactions
+// @Accept  json
+// @Produce  json
+// @Param transaction body models.Transaction true "Transaction to create"
+// @Success 200 {object} models.Transaction
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Security BearerAuth
+// @Router /transactions [post]
 func CreateTransaction(c *gin.Context) {
 	var tx models.Transaction
 
@@ -35,6 +47,15 @@ func CreateTransaction(c *gin.Context) {
 	c.JSON(http.StatusOK, tx)
 }
 
+// GetTransactions godoc
+// @Summary Get all user transactions
+// @Description Retrieve all transactions for the authenticated user
+// @Tags Transactions
+// @Produce  json
+// @Success 200 {array} models.Transaction
+// @Failure 500 {object} map[string]string
+// @Security BearerAuth
+// @Router /transactions [get]
 func GetTransactions(c *gin.Context) {
 	userID := c.MustGet("userID").(uint)
 
@@ -47,6 +68,20 @@ func GetTransactions(c *gin.Context) {
 	c.JSON(http.StatusOK, transaction)
 }
 
+// UpdateTransaction godoc
+// @Summary Update a transaction
+// @Description Update an existing transaction by ID for the authenticated user
+// @Tags Transactions
+// @Accept  json
+// @Produce  json
+// @Param id path string true "Transaction ID"
+// @Param transaction body models.Transaction true "Updated transaction data"
+// @Success 200 {object} models.Transaction
+// @Failure 400 {object} map[string]string
+// @Failure 404 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Security BearerAuth
+// @Router /transactions/{id} [put]
 func UpdateTransaction(c *gin.Context) {
 	userID := c.MustGet("userID").(uint)
 	id := c.Param("id")
@@ -84,6 +119,17 @@ func UpdateTransaction(c *gin.Context) {
 	c.JSON(http.StatusOK, tx)
 }
 
+// DeleteTransaction godoc
+// @Summary Delete a transaction
+// @Description Delete a transaction by ID for the authenticated user
+// @Tags Transactions
+// @Produce  json
+// @Param id path string true "Transaction ID"
+// @Success 200 {object} map[string]string
+// @Failure 404 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Security BearerAuth
+// @Router /transactions/{id} [delete]
 func DeleteTransaction(c *gin.Context) {
 	userID := c.MustGet("userID").(uint)
 	id := c.Param("id")
@@ -102,6 +148,15 @@ func DeleteTransaction(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Transaction deleted"})
 }
 
+// GetBalance godoc
+// @Summary Get current balance
+// @Description Calculate and return total income, total expenses, and balance status (positive/negative)
+// @Tags Transactions
+// @Produce  json
+// @Success 200 {object} map[string]interface{}
+// @Failure 500 {object} map[string]string
+// @Security BearerAuth
+// @Router /transactions/balance [get]
 func GetBalance(c *gin.Context) {
 	userID := c.MustGet("userID").(uint)
 
