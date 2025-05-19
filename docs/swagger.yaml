@@ -195,4 +195,9 @@ paths:
       summary: Get current balance
       tags:
       - Transactions
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"
