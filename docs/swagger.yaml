@@ -1,4 +1,33 @@
 definitions:
+  models.LoginRequest:
+    properties:
+      email:
+        example: somebody@someone.com
+        type: string
+      password:
+        example: password123
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  models.RegisterRequest:
+    properties:
+      email:
+        example: somebody@someone.com
+        type: string
+      name:
+        example: Somebody Someone
+        type: string
+      password:
+        example: password123
+        minLength: 6
+        type: string
+    required:
+    - email
+    - name
+    - password
+    type: object
   models.Transaction:
     properties:
       amount:
@@ -33,6 +62,84 @@ definitions:
 info:
   contact: {}
 paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate user and return JWT token
+      parameters:
+      - description: User login credentials
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/models.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Login user
+      tags:
+      - Auth
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Create a new user account
+      parameters:
+      - description: User Registration Request
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Register a new user
+      tags:
+      - Auth
   /transactions:
     get:
       description: Retrieve all transactions for the authenticated user
