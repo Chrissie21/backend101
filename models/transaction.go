@@ -11,7 +11,7 @@ type Transaction struct {
 	Category    string    `json:"category" validate:"required,min=2,max=30"`
 	Description string    `json:"description" validate:"required,min=2"`
 	Type        string    `json:"type" validate:"required,oneof=income expense"` // income or expense
-	Date        time.Time `json:"date" validate:"required"`
+	Date        time.Time `json:"date"`
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 }
