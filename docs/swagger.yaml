@@ -1,4 +1,40 @@
 definitions:
+  dto.CreateTransactionInput:
+    properties:
+      amount:
+        type: number
+      category:
+        type: string
+      description:
+        type: string
+      type:
+        enum:
+        - income
+        - expense
+        type: string
+    required:
+    - amount
+    - category
+    - type
+    type: object
+  dto.UpdateTransactionInput:
+    properties:
+      amount:
+        type: number
+      category:
+        type: string
+      description:
+        type: string
+      type:
+        enum:
+        - income
+        - expense
+        type: string
+    required:
+    - amount
+    - category
+    - type
+    type: object
   models.LoginRequest:
     properties:
       email:
@@ -174,6 +210,12 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/models.Transaction'
+      - description: Transaction to create
+        in: body
+        name: transaction
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateTransactionInput'
       produces:
       - application/json
       responses:
@@ -249,6 +291,12 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/models.Transaction'
+      - description: Updated transaction data
+        in: body
+        name: transaction
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateTransactionInput'
       produces:
       - application/json
       responses:

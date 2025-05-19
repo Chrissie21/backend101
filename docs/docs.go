@@ -196,6 +196,15 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/models.Transaction"
                         }
+                    },
+                    {
+                        "description": "Transaction to create",
+                        "name": "transaction",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateTransactionInput"
+                        }
                     }
                 ],
                 "responses": {
@@ -295,6 +304,15 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/models.Transaction"
                         }
+                    },
+                    {
+                        "description": "Updated transaction data",
+                        "name": "transaction",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateTransactionInput"
+                        }
                     }
                 ],
                 "responses": {
@@ -389,6 +407,58 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "dto.CreateTransactionInput": {
+            "type": "object",
+            "required": [
+                "amount",
+                "category",
+                "type"
+            ],
+            "properties": {
+                "amount": {
+                    "type": "number"
+                },
+                "category": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "income",
+                        "expense"
+                    ]
+                }
+            }
+        },
+        "dto.UpdateTransactionInput": {
+            "type": "object",
+            "required": [
+                "amount",
+                "category",
+                "type"
+            ],
+            "properties": {
+                "amount": {
+                    "type": "number"
+                },
+                "category": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "income",
+                        "expense"
+                    ]
+                }
+            }
+        },
         "models.LoginRequest": {
             "type": "object",
             "required": [
