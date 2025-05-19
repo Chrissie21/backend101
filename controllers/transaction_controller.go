@@ -22,6 +22,7 @@ import (
 // @Failure 500 {object} map[string]string
 // @Security BearerAuth
 // @Router /transactions [post]
+// @Param transaction body dto.CreateTransactionInput true "Transaction to create"
 func CreateTransaction(c *gin.Context) {
 	var tx models.Transaction
 
@@ -82,6 +83,7 @@ func GetTransactions(c *gin.Context) {
 // @Failure 500 {object} map[string]string
 // @Security BearerAuth
 // @Router /transactions/{id} [put]
+// @Param transaction body dto.UpdateTransactionInput true "Updated transaction data"
 func UpdateTransaction(c *gin.Context) {
 	userID := c.MustGet("userID").(uint)
 	id := c.Param("id")
