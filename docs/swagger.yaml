@@ -1,4 +1,198 @@
+definitions:
+  models.Transaction:
+    properties:
+      amount:
+        type: number
+      category:
+        maxLength: 30
+        minLength: 2
+        type: string
+      createdAt:
+        type: string
+      date:
+        type: string
+      description:
+        minLength: 2
+        type: string
+      id:
+        type: integer
+      type:
+        description: income or expense
+        enum:
+        - income
+        - expense
+        type: string
+      updatedAt:
+        type: string
+    required:
+    - amount
+    - category
+    - description
+    - type
+    type: object
 info:
   contact: {}
-paths: {}
+paths:
+  /transactions:
+    get:
+      description: Retrieve all transactions for the authenticated user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Transaction'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get all user transactions
+      tags:
+      - Transactions
+    post:
+      consumes:
+      - application/json
+      description: Add a new income or expense transaction
+      parameters:
+      - description: Transaction to create
+        in: body
+        name: transaction
+        required: true
+        schema:
+          $ref: '#/definitions/models.Transaction'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Transaction'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Create a transaction
+      tags:
+      - Transactions
+  /transactions/{id}:
+    delete:
+      description: Delete a transaction by ID for the authenticated user
+      parameters:
+      - description: Transaction ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Delete a transaction
+      tags:
+      - Transactions
+    put:
+      consumes:
+      - application/json
+      description: Update an existing transaction by ID for the authenticated user
+      parameters:
+      - description: Transaction ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated transaction data
+        in: body
+        name: transaction
+        required: true
+        schema:
+          $ref: '#/definitions/models.Transaction'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Transaction'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Update a transaction
+      tags:
+      - Transactions
+  /transactions/balance:
+    get:
+      description: Calculate and return total income, total expenses, and balance
+        status (positive/negative)
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get current balance
+      tags:
+      - Transactions
 swagger: "2.0"
