@@ -3,6 +3,7 @@ package controllers
 import (
 	"backend101/database"
 	"backend101/models"
+	"backend101/utils"
 	"net/http"
 	"time"
 
@@ -15,6 +16,11 @@ func CreateTransaction(c *gin.Context) {
 	if err := c.ShouldBindJSON(&tx); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
+	}
+
+	// Validate
+	if validationErrors := utils.ValidateStruct(&tx); validationErrors != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"validation_errors": validationErrors})
 	}
 
 	userID := c.MustGet("userID").(uint)
