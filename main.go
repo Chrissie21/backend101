@@ -38,3 +38,7 @@ func main() {
 		log.Fatal("Failed to run server: ", err)
 	}
 }
+
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
